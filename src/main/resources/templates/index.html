@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>User</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+  <script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script th:src="@{/js/user.js}"></script>
+</head>
+<body>
+    <div class="logo">
+        <h1>File Storage </h1>
+    </div>
+    <div class="container">
+        <form>
+            <label for="email">Email:</label>
+            <input type="text" id="email"><br />
+
+            <label for="name">Name:</label>
+            <input type="text" id="name"><br />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password"><br />
+
+            <label for="bname">Bucket Name:</label>
+            <input type="text" id="bname"><br />
+
+            <label for="downloadFile">File Name:</label>
+            <input type="text" id="downloadFile">
+            <input type="button" id="download" value="Download File">
+            <br />
+            <br/>
+            
+          
+            <input type="text" id="selectFile">
+            <input type="button" id="selectFile" value="Select File">
+            <input type="button" id="uploadFile" value="Upload File">
+            <br />
+            
+            
+
+			<input type="button" id="insert" value="Insert User">
+            <input type="button" id="query" value="Get User">
+            <input type="button" id="save" value="Update User">
+            <input type="button" id="delete" value="Delete User">
+            <input type="button" id="clear" value="Clear Form">
+        </form>
+    </div>
+</body>
+</html>

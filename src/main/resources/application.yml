@@ -1,0 +1,97 @@
+amazonProperties:
+   accessKey: 
+   secretKey: 
+   bucketName: filestorageproject
+
+---
+
+# Tomcat Server
+
+server:
+  port: 9001
+
+
+
+
+# Active Profile
+ 
+spring:
+  profiles:
+    active: default
+    
+        
+---
+
+# Default Profile
+
+spring:
+  profiles: default
+
+# Database Settings
+  datasource:
+    #url: jdbc:mysql://localhost:3306/filestorage?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/filestorage?autoReconnect=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      max-wait: 10000
+      max-active: 15
+      max-idle: 10
+      initial-size: 3
+      test-on-borrow: true
+    continue-on-error: false
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        ddl-auto: validate
+        format_sql: true
+        use-new-id-generator-mappings: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        
+        
+---
+        
+# Prod Profile
+
+spring:
+  profiles: prod
+  
+ #Database Settings 
+ 
+  datasource:
+  
+ 
+    url: jdbc:mysql://filestoragedb.clvbvabm54qq.ca-central-1.rds.amazonaws.com/filestoragedb?autoReconnect=true&useSSL=false&useUnicode=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      max-wait: 10000
+      max-active: 15
+      max-idle: 10
+      initial-size: 3
+      test-on-borrow: true
+    continue-on-error: false
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        ddl-auto: validate
+        format_sql: true
+        use-new-id-generator-mappings: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
