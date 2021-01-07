@@ -59,6 +59,11 @@ public class userController {
 	{
 		return this.userService.findUser(email);
 	}
+	@GetMapping("/find/user/login/{email}/{password}")
+	public User loginUser(@PathVariable("email") String email,@PathVariable("password") String password) throws Exception
+	{
+		return this.userService.loginUser(email,password);
+	}
 	
 	@DeleteMapping("/delete/user/{email}")
 	public void deleteUser(@PathVariable("email") String email)

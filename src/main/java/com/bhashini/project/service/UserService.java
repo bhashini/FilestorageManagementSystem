@@ -1,29 +1,32 @@
 package com.bhashini.project.service;
 
-
-
-
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.bhashini.project.jpa.User;
 import com.bhashini.project.repository.FileRepository;
 import com.bhashini.project.repository.UserRepository;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @RestController
 public class UserService {
+	
+	String loginPw;
+	
+	
 	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	FileRepository fileRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncorder;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public User createUser(User user) {
@@ -34,6 +37,8 @@ public class UserService {
 			
 		}
 		else {
+		
+		 user.setPassword(bcryptPasswordEncorder.encode(user.getPassword()));
 		 newUser = user; 
 		 this.userRepository.save(user);
 		
@@ -61,6 +66,27 @@ public class UserService {
 		return findUser;
 		
 	}
+	
+	public User loginUser(String email, String password) {
+		
+		if(this.userRepository.findById(email).isPresent())
+		{
+			this.loginPw =	this.userRepository.findById(email).get().getPassword();
+		
+			if(bcryptPasswordEncorder.matches(password, this.loginPw))
+			{
+				return this.userRepository.findById(email).get();
+			}
+			else {
+				return null;
+			}
+			
+		}
+		else {
+		 return null;
+		}
+		
+	}
 
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -70,7 +96,7 @@ public class UserService {
 
 			
 			user.setName(newUser.getName());
-			user.setPassword(newUser.getPassword());
+			user.setPassword(bcryptPasswordEncorder.encode(newUser.getPassword()));
 			user.setBname(newUser.getBname());
 
 			return this.userRepository.save(user);
